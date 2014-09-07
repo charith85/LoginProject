@@ -8,7 +8,7 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        $userName = "Charith1";
+        $userName = "Charith";
         $password = "password";
         
         $em = $this->getDoctrine()->getEntityManager();
@@ -18,13 +18,13 @@ class DefaultController extends Controller
         
         if($user) 
         {
-             return $this->render('LoginLoginBundle:Default:index.html.twig', array('name' => $user->getFirstName()));
+             return $this->render('LoginLoginBundle:Default:login.html.twig', array('name' => $user->getFirstName()));
             
         }
         else 
         {
             
-             return $this->render('LoginLoginBundle:Default:index.html.twig', array('name' => 'Login Failed'));
+             return $this->render('LoginLoginBundle:Default:login.html.twig', array('name' => 'Login Failed'));
             
         }
         
