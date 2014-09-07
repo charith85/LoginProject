@@ -3,28 +3,32 @@
 namespace Login\LoginBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Symfony\Component\HttpFoundation\Request;
 class DefaultController extends Controller
 {
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $userName = "Charith";
-        $password = "password";
-        
-        $em = $this->getDoctrine()->getEntityManager();
-        $repository = $em ->getRepository('LoginLoginBundle:Users');
-        
-        $user = $repository ->findOneBy(array('userName'=>$userName,'password'=>$password));
-        
-        if($user) 
+        if($request->getMethod() == 'POST')
         {
-             return $this->render('LoginLoginBundle:Default:login.html.twig', array('name' => $user->getFirstName()));
+            $userName = $request->get('inputEmail');
+            $password = $request->get('inputPassword');
             
-        }
+            $em = $this->getDoctrine()->getEntityManager();
+            $repository = $em ->getRepository('LoginLoginBundle:Users');
+        
+            $user = $repository ->findOneBy(array('userName'=>$userName,'password'=>$password));
+        
+            if($user) 
+            {
+                return $this->render('LoginLoginBundle:Default:login.html.twig',array('name' => $user->getFirstName()));
+            
+            }
+            
+        }    
         else 
         {
             
-             return $this->render('LoginLoginBundle:Default:login.html.twig', array('name' => 'Login Failed'));
+             return $this->render('LoginLoginBundle:Default:login.html.twig');
             
         }
         
